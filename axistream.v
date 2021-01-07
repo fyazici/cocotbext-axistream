@@ -36,9 +36,9 @@ module axistream(
 
     `ifdef COCOTB_SIM
     initial begin
-    $dumpfile("axistream.vcd");
-    $dumpvars(0, axistream);
-    #1;
+        $dumpfile("dump.vcd");
+        $dumpvars;
+        #1;
     end
     `endif
 
