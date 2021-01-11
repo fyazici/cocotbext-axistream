@@ -33,7 +33,7 @@ class AXI4StreamMaster(BusDriver):
         self.bus.terr.setimmediatevalue(0)
         self.bus.tdata.setimmediatevalue(0)
 
-    async def write(self, frame):
+    async def write(self, frame, timeout=None):
         self.bus.tvalid <= 1
         self.bus.tid <= frame.tid
         self.bus.tdest <= frame.tdest
@@ -44,11 +44,16 @@ class AXI4StreamMaster(BusDriver):
 
         while True:
             await ReadOnly()
-            if self.bus.tready.value:
+            if self.bus.tready.value or timeout == 0:
                 break
+            if timeout is not None:
+                timeout -= 1
             await RisingEdge(self.clock)
+        if timeout == 0:
+            return False
         await RisingEdge(self.clock)
         self.bus.tvalid <= 0
+        return True
 
 class AXI4StreamMonitor(BusMonitor):
     """AXI4-Stream Monitor

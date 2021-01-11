@@ -31,7 +31,10 @@ async def test_axistream_passthrough(dut):
     for _ in range(10):
         val = random.randint(0, 100)
         m_frame = AXI4StreamFrame(0, 1, 1, 1, 0, val)
-        await master.write(m_frame)
+        if _ == 5:
+            dut.m_axis_tready <= 0
+        r = await master.write(m_frame, 3)
+        assert r, "write timed out"
     
     raise sb.result
         
