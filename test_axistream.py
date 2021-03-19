@@ -2,7 +2,7 @@ import random
 import cocotb
 import cocotb.scoreboard
 from cocotb.clock import Clock
-from cocotb.drivers import BitDriver
+from cocotb_bus.drivers import BitDriver
 from cocotb.generators.bit import intermittent_single_cycles
 
 from cocotbext.axistream import *
