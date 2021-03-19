@@ -1,9 +1,8 @@
 import random
 import cocotb
-import cocotb.scoreboard
+import cocotb_bus.scoreboard
 from cocotb.clock import Clock
 from cocotb_bus.drivers import BitDriver
-from cocotb.generators.bit import intermittent_single_cycles
 
 from cocotbext.axistream import *
 import itertools
@@ -23,7 +22,7 @@ async def test_axistream_passthrough(dut):
     monitor_1.add_callback(lambda frame: expected_out.append(frame))
     monitor_2 = AXI4StreamMonitor(dut, "m_axis", dut.clk)
 
-    sb = cocotb.scoreboard.Scoreboard(dut)
+    sb = cocotb_bus.scoreboard.Scoreboard(dut)
     sb.add_interface(monitor_2, expected_out)
     
     dut.m_axis_tready <= 1

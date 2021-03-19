@@ -4,7 +4,7 @@
 import cocotb
 from cocotb.triggers import RisingEdge, ReadOnly
 from cocotb_bus.drivers import BusDriver
-from cocotb.monitors import BusMonitor
+from cocotb_bus.monitors import BusMonitor
 
 from collections import namedtuple, deque
 
