@@ -34,13 +34,13 @@ class AXI4StreamMaster(BusDriver):
         self.bus.tdata.setimmediatevalue(0)
 
     async def write(self, frame, timeout=None):
-        self.bus.tvalid <= 1
-        self.bus.tid <= frame.tid
-        self.bus.tdest <= frame.tdest
-        self.bus.tlast <= frame.tlast
-        self.bus.tkeep <= frame.tkeep
-        self.bus.terr <= frame.terr
-        self.bus.tdata <= frame.tdata
+        self.bus.tvalid.value = 1
+        self.bus.tid.value = frame.tid
+        self.bus.tdest.value = frame.tdest
+        self.bus.tlast.value = frame.tlast
+        self.bus.tkeep.value = frame.tkeep
+        self.bus.terr.value = frame.terr
+        self.bus.tdata.value = frame.tdata
 
         while True:
             await ReadOnly()
@@ -52,7 +52,7 @@ class AXI4StreamMaster(BusDriver):
         if timeout == 0:
             return False
         await RisingEdge(self.clock)
-        self.bus.tvalid <= 0
+        self.bus.tvalid.value = 0
         return True
 
 class AXI4StreamMonitor(BusMonitor):
